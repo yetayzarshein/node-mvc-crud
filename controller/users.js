@@ -23,7 +23,7 @@ router.get('/add',(req, res) => {
 })
 
 router.post('/save',(req, res) => { 
-    let data = {name: req.body.name, email: req.body.age, phone_no: req.body.phone_no};
+    let data = {name: req.body.name, age: req.body.age, phone_no: req.body.phone_no};
     let sql = "INSERT INTO users SET ?";
     let query = dbConn.query(sql, data,(err, results) => {
       if(err) throw err;
@@ -45,7 +45,7 @@ router.get('/edit/:userId',(req, res) => {
 
 router.post('/update',(req, res) => {
     const userId = req.body.id;
-    let sql = "update users SET name='"+req.body.name+"',  email='"+req.body.age+"',  phone_no='"+req.body.phone_no+"' where id ="+userId;
+    let sql = "update users SET name='"+req.body.name+"',  age='"+req.body.age+"',  phone_no='"+req.body.phone_no+"' where id ="+userId;
     let query = dbConn.query(sql,(err, results) => {
       if(err) throw err;
       res.redirect('/');
