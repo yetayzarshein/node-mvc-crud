@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const dbConn  = require('../model/db');
+const user_model  = require('../model/user_model.js');
 
 router.get('/', function (req, res) {
-    dbConn.query('SELECT * FROM users ORDER BY id DESC',function(err,rows){
+    user_model.getuser(function(err,result){
         if(err) {
             res.send('Error!')
         } else {
             res.render('user',{
                 title:'Node MVC CRUD',
-                users:rows
+                users:result
             })
             // console.log(rows);
-        }        
+        }    
     })
 })
 
@@ -23,12 +23,24 @@ router.get('/add',(req, res) => {
 })
 
 router.post('/save',(req, res) => { 
+<<<<<<< HEAD
     let data = {name: req.body.name, age: req.body.age, phone_no: req.body.phone_no};
     let sql = "INSERT INTO users SET ?";
     let query = dbConn.query(sql, data,(err, results) => {
       if(err) throw err;
       res.redirect('/');
     });
+=======
+    var data = req.body;
+    user_model.adduser(data,function(err,result){
+        if(err){
+            
+        }else{
+            res.redirect('/');
+        }
+    })
+    
+>>>>>>> b190699db95119a6bc627195045a375222f57141
 });
 
 router.get('/edit/:userId',(req, res) => {
