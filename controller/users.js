@@ -23,14 +23,6 @@ router.get('/add',(req, res) => {
 })
 
 router.post('/save',(req, res) => { 
-<<<<<<< HEAD
-    let data = {name: req.body.name, age: req.body.age, phone_no: req.body.phone_no};
-    let sql = "INSERT INTO users SET ?";
-    let query = dbConn.query(sql, data,(err, results) => {
-      if(err) throw err;
-      res.redirect('/');
-    });
-=======
     var data = req.body;
     user_model.adduser(data,function(err,result){
         if(err){
@@ -38,39 +30,43 @@ router.post('/save',(req, res) => {
         }else{
             res.redirect('/');
         }
-    })
-    
->>>>>>> b190699db95119a6bc627195045a375222f57141
+    })    
 });
 
-router.get('/edit/:userId',(req, res) => {
-    const userId = req.params.userId;
-    let sql = `Select * from users where id = ${userId}`;
-    let query = dbConn.query(sql,(err, result) => {
-        if(err) throw err;
-        res.render('edit', {
-            title : 'Node MVC CRUD',
-            user : result[0]
-        });
-    });
+router.get('/edit/:userId',(req, res) => {          
+    var data = req.params.userId;    
+    user_model.getuserid(data,function(err,result){
+        if(err){
+            
+        }else{
+            res.render('edit', {
+                title : 'Node MVC CRUD',
+                user : result[0]
+            })
+        }
+    })
 });
 
 router.post('/update',(req, res) => {
-    const userId = req.body.id;
-    let sql = "update users SET name='"+req.body.name+"',  age='"+req.body.age+"',  phone_no='"+req.body.phone_no+"' where id ="+userId;
-    let query = dbConn.query(sql,(err, results) => {
-      if(err) throw err;
-      res.redirect('/');
-    });
+    var data = req.body;    
+    user_model.edituser(data,function(err,result){
+        if(err){
+            
+        }else{
+            res.redirect('/');
+        }
+    })
 });
 
 router.get('/delete/:userId',(req, res) => {
-    const userId = req.params.userId;
-    let sql = `DELETE from users where id = ${userId}`;
-    let query = dbConn.query(sql,(err, result) => {
-        if(err) throw err;
-        res.redirect('/');
-    });
+    var data = req.params.userId;
+    user_model.deleteuser(data,function(err,result){
+        if(err){
+            
+        }else{
+            res.redirect('/');
+        }
+    })
 });
 
 module.exports = router;
